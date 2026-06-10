@@ -1,0 +1,20 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+ 
+# dbt
+target/
+logs/
+dbt_packages/
+ 
+# VS Code
+.vscode/
+ 
+# Snowflake Keys
+*.p8
+*.pem
+rsa_key.p8
+ 
+# Environment files
+.env

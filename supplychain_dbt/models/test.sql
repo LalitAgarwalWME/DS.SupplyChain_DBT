@@ -1,0 +1,1 @@
+select * from supplychain.stg.ERP_CUSTOMERS limit 10

@@ -1,0 +1,93 @@
+version: 2
+ 
+sources:
+  - name: stg
+    database: SUPPLYCHAIN
+    schema: STG
+ 
+    tables:
+      - name: ERP_CUSTOMERS
+      - name: ERP_PRODUCTS
+      - name: ERP_SALES_ORDERS
+      - name: ERP_SALES_ORDER_ITEMS
+      - name: ERP_INVOICES
+ 
+models:
+ 
+  - name: dim_customer
+    columns:
+      - name: CUSTOMER_SK
+        tests:
+          - unique
+          - not_null
+ 
+      - name: CUSTOMER_ID
+        tests:
+          - not_null
+ 
+  - name: dim_products
+    columns:
+      - name: PRODUCT_SK
+        tests:
+          - unique
+          - not_null
+ 
+      - name: PRODUCT_ID
+        tests:
+          - not_null
+ 
+  - name: dim_date
+    columns:
+      - name: DATE_KEY
+        tests:
+          - unique
+          - not_null
+ 
+  - name: fact_sales_order
+    columns:
+      - name: CUSTOMER_SK
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_customer')
+              field: CUSTOMER_SK
+ 
+      - name: PRODUCT_SK
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_products')
+              field: PRODUCT_SK
+ 
+      - name: DATE_KEY
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_date')
+              field: DATE_KEY
+ 
+  - name: fact_invoices
+    columns:
+      - name: CUSTOMER_SK
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_customer')
+              field: CUSTOMER_SK
+ 
+      - name: DATE_KEY
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_date')
+              field: DATE_KEY
+
+  - name: vw_dim_customer
+ 
+  - name: vw_dim_products
+ 
+  - name: vw_dim_date
+ 
+  - name: vw_fact_sales_order
+ 
+  - name: vw_fact_invoices
